@@ -9,6 +9,7 @@ import validateEnv from './utils/validateEnv';
 import { AppDataSource } from './utils/data-source';
 import authRouter from "./routes/auth.routes";
 import cuisinesRouter from './routes/cuisine.routes'
+import orderRouter from'./routes/order.routes';
 import redisClient from './utils/connectRedis';
 import AppError from "./utils/appError";
 
@@ -20,7 +21,9 @@ AppDataSource.initialize()
     const app = express();
 
     // MIDDLEWARE
-
+// TEMPLATE ENGINE
+app.set('view engine', 'pug');
+app.set('views', `${__dirname}/views`);
     // 1. Body parser
     app.use(express.json({ limit: "10kb" }));
     // 2. Logger
@@ -40,7 +43,8 @@ AppDataSource.initialize()
        );
     // ROUTES
     app.use("/api/auth", authRouter);
-    app.use("/api/cuisines",cuisinesRouter)
+    app.use("/api/cuisines",cuisinesRouter);
+    app.use("/api/orders" , orderRouter);
     // HEALTH CHECKER
     app.post('/api/healthchecker', async (req:Request, res: Response) => {
       const a =req.body
