@@ -10,7 +10,7 @@ export const orderemailController = async (req: Request, res: Response, next: Ne
 
         // Generate HTML table
         const htmlTable = generateHTMLTable(orderData);
-
+console.log(htmlTable);
         // Launch a headless browser
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
@@ -23,6 +23,10 @@ export const orderemailController = async (req: Request, res: Response, next: Ne
 
         // Close the browser
         await browser.close();
+           //
+           //
+           
+        
 
         // Send email with image attachment
         const mailOptions = {

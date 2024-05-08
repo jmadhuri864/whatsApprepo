@@ -64,7 +64,7 @@ async (
       next: NextFunction
     ) => {
       try {
-        const { cuisineName } = req.params;
+        const cuisineName  = "Indian Cuisine";
      const cuisineRepository=AppDataSource.getRepository(Cuisine)
         // Find the cuisine based on the provided cuisineName
         const cuisine = await cuisineRepository.findOne({
