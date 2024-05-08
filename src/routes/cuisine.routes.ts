@@ -21,6 +21,6 @@ router.get('/getIngredientsByDishId/:dishId',getIngredientsByDishId );
 router.get('/getDishesByCuisineName/:cuisineName',getDishesByCuisineNameController);
 router.post('/addQuantityForIngredients/:ingredientId',saveQuantityforIngredientHandler);
 router.post('/sendmsgfromwp',sendwhatsappMessageController );
-router.get('/CuisineNameWithDishAndIngre/:cuisineName',CuisineNameWithDishAndIngreController)
+router.get('/CuisineNameWithDishAndIngre',CuisineNameWithDishAndIngreController)
 
 export default router;
