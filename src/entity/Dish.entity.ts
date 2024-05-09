@@ -11,7 +11,7 @@ export class Dish  extends Model{
     @Column()
     name: string;
 
-    @OneToMany(type => Ingredient, ingredient => ingredient.dish)
+    @OneToMany(type => Ingredient, ingredient => ingredient.dish,{cascade:true})
     ingredients: Ingredient[];
     @ManyToOne(() => Cuisine, cuisine => cuisine.dishes)
     cuisine: Cuisine;
