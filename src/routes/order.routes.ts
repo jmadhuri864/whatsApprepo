@@ -8,7 +8,7 @@ import { orderemailController } from "../controller/email.controller";
 
 const router = express.Router();
 
-router.use(deserializeUser, requireUser);
+//router.use(deserializeUser, requireUser);
 
 
 
