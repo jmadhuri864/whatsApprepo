@@ -1,12 +1,12 @@
 // cuisine.repository.ts
-import { createConnection } from 'typeorm';
+
 import { DeepPartial} from 'typeorm';
 import { Cuisine } from '../entity/Cuisine.entity';
 import { Dish } from '../entity/Dish.entity';
 import { Ingredient } from '../entity/Ingredient.entity';
 import { AppDataSource } from '../utils/data-source';
 //const data = require('./data.json');
-import { RestaurantData, Cuisine as CuisineInterface, Dish as DishInterface, Ingredient as IngredientInterface } from 'C:/Users/madhuri jadhav/Desktop/HotelManagement/HotelM/interface';
+
 const cuisineRepository = AppDataSource.getRepository(Cuisine);
 const dishRepository = AppDataSource.getRepository(Dish);
 const ingredientRepository = AppDataSource.getRepository(Ingredient);

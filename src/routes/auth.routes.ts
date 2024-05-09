@@ -2,12 +2,10 @@ import express from 'express';
 
 import {
   loginUserHandler,
-  logoutHandler,
-  refreshAccessTokenHandler,
-  registerUserHandler,
+  
+  registerUserHandler
 } from '../controller/Auth.controller';
-import { deserializeUser } from '../middleware/deserializeUser';
-import { requireUser } from '../middleware/requireUser';
+
 import { validate } from '../middleware/validate';
 import { createUserSchema,  loginUserSchema} from '../schemas/user.schema';
 
