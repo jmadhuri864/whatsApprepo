@@ -33,10 +33,10 @@ app.set('views', `${__dirname}/views`);
     // 4. Cors
     app.use(
         cors({
-          origin: config.get<string>("origin"),
+          //origin: config.get<string>("origin"),
           //origin:'http://localhost:3000/dashboard',
           //origin:'https://8ae4-163-53-201-67.ngrok-free.app',
-          //origin: true,
+          origin: true,
           
           credentials: true
         })
