@@ -3,7 +3,7 @@ import { addQuantityforingre } from "../service/quantity.service";
 
 
 export const saveQuantityforIngredientHandler = async (
-    req: Request<{ingredientId:string}, {}, { quantity: number; units: string }>,
+    req: Request<{ingredientId:string,name:string}, {}, { quantity: number; units: string }>,
     res: Response,
     next: NextFunction
   ) => {
