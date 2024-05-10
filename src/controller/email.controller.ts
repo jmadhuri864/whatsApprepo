@@ -99,7 +99,7 @@ import { addQuantityforIngredient } from '../service/quantity.service';
 //     //html += `<h2>${orderData.name}</h2>`;
 
 //     // Iterate over each dish in the order
-//     orderData.ingredient.forEach((ingredient: any) => {
+//     orderData.forEach((ingredient: any) => {
 //         // Add the dish name as a subheading
 //         //html += `<h3>${dish.name}</h3>`;
 
@@ -149,7 +149,7 @@ import { addQuantityforIngredient } from '../service/quantity.service';
 //         const htmlTable = generateHTMLTable(orderData);
 
 //         // Iterate over each ingredient in the orderData and add its quantity
-//         for (const ingredient of orderData.ingredients) {
+//         for (const ingredient of orderData) {
 //             await addQuantityforIngredient(ingredient.id, ingredient.quantity, ingredient.units);
 //         }
 
@@ -208,10 +208,10 @@ function generateHTMLTable(orderData: any): string {
     // Variable to keep track of the ingredient ID
     let ingredientId = 1;
 
-    // Check if orderData.ingredients exists and is not empty
-    if (orderData.ingredients && orderData.ingredients.length > 0) {
+    // Check if orderData exists and is not empty
+    if (orderData && orderData.length > 0) {
         // Iterate over each ingredient in the orderData
-        orderData.ingredients.forEach((ingredient: any) => {
+        orderData.forEach((ingredient: any) => {
             // Extract quantity and units from the ingredient object
             const quantity = ingredient.quantity ? ingredient.quantity: '';
             const units = ingredient.quantity && ingredient.units ? ingredient.units : '';
@@ -248,17 +248,17 @@ function generateHTMLTable(orderData: any): string {
 export const orderemailController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const orderData = req.body; // Assuming the order data is sent in the request body
-
-        // Check if orderData.ingredients is an array
-        if (!Array.isArray(orderData.ingredients)) {
-            throw new Error('orderData.ingredients is not an array');
+        console.log(orderData);
+        // Check if orderData is an array
+        if (!Array.isArray(orderData)) {
+            throw new Error('orderData is not an array');
         }
 
         // Generate HTML table
         const htmlTable = generateHTMLTable(orderData);
 
         // Iterate over each ingredient in the orderData and add its quantity
-        for (const ingredient of orderData.ingredients) {
+        for (const ingredient of orderData) {
             await addQuantityforIngredient(ingredient.id, ingredient.quantity, ingredient.units);
         }
 
