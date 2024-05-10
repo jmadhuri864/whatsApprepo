@@ -12,7 +12,7 @@ export class Quantity  extends Model{
 
     @Column()
     units: string;
-
     @ManyToOne(type => Ingredient, ingredient => ingredient.quantities)
     ingredient: Ingredient;
+   
 }

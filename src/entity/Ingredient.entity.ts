@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, ManyToMany, JoinTable } from "typeorm";
 
 import Model from "./Model.entity";
 import { Cuisine } from "./Cuisine.entity";
@@ -17,9 +17,10 @@ export class  Ingredient extends Model {
     @Column({default:false,nullable:true})
     checklist:boolean ;
 
-    @ManyToOne(type => Dish, dish => dish.ingredients)
+    @ManyToMany(type => Dish, dish => dish.ingredients)
     dish: Dish;
 
-    @OneToMany(type => Quantity, quantity => quantity.ingredient, { cascade: true })
+    @ManyToMany(type => Quantity,  { cascade: true })
+    @JoinTable()
     quantities: Quantity[];
 }
