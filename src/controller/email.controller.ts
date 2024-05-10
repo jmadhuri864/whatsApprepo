@@ -141,48 +141,48 @@ import { addQuantityforIngredient } from '../service/quantity.service';
 
 
 
-export const orderemailController = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const orderData = req.body; // Assuming the order data is sent in the request body
+// export const orderemailController = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         const orderData = req.body; // Assuming the order data is sent in the request body
 
-        // Generate HTML table
-        const htmlTable = generateHTMLTable(orderData);
+//         // Generate HTML table
+//         const htmlTable = generateHTMLTable(orderData);
 
-        // Iterate over each ingredient in the orderData and add its quantity
-        for (const ingredient of orderData.ingredients) {
-            await addQuantityforIngredient(ingredient.id, ingredient.quantity, ingredient.units);
-        }
+//         // Iterate over each ingredient in the orderData and add its quantity
+//         for (const ingredient of orderData.ingredients) {
+//             await addQuantityforIngredient(ingredient.id, ingredient.quantity, ingredient.units);
+//         }
 
-        // Launch a headless browser
-        const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
-        const page = await browser.newPage();
+//         // Launch a headless browser
+//         const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+//         const page = await browser.newPage();
 
-        // Set the content of the page to the HTML table
-        await page.setContent(htmlTable);
+//         // Set the content of the page to the HTML table
+//         await page.setContent(htmlTable);
 
-        // Render the page as a PNG image
-        const imageBuffer = await page.screenshot({ type: 'png' });
+//         // Render the page as a PNG image
+//         const imageBuffer = await page.screenshot({ type: 'png' });
 
-        // Close the browser
-        await browser.close();
+//         // Close the browser
+//         await browser.close();
 
-        // Send email with image attachment
-        const mailOptions = {
-            from: process.env.AUTH_EMAIL,
-            to: ['jadhavmadhuri2525@gmail.com', 'omkarbandal2010@gmail.com'], // Replace with recipient's email address
-            subject: 'Order Details',
-            text: 'Please find attached the order details.',
-            attachments: [{ filename: 'order.png', content: imageBuffer }]
-        };
+//         // Send email with image attachment
+//         const mailOptions = {
+//             from: process.env.AUTH_EMAIL,
+//             to: ['jadhavmadhuri2525@gmail.com', 'omkarbandal2010@gmail.com'], // Replace with recipient's email address
+//             subject: 'Order Details',
+//             text: 'Please find attached the order details.',
+//             attachments: [{ filename: 'order.png', content: imageBuffer }]
+//         };
 
-        await sendEmail(mailOptions);
+//         await sendEmail(mailOptions);
 
-        res.send('Email sent successfully');
-    } catch (error:any) {
-        console.error('Error sending email:', error);
-        res.status(500).send('Failed to send email: ' + error.message); // Provide error message to client
-    }
-};
+//         res.send('Email sent successfully');
+//     } catch (error:any) {
+//         console.error('Error sending email:', error);
+//         res.status(500).send('Failed to send email: ' + error.message); // Provide error message to client
+//     }
+//};
 function generateHTMLTable(orderData: any): string {
     // Start with an empty string to store the HTML
     let html = '';
@@ -243,3 +243,53 @@ function generateHTMLTable(orderData: any): string {
 
     return html;
 }
+
+
+export const orderemailController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const orderData = req.body; // Assuming the order data is sent in the request body
+
+        // Check if orderData.ingredients is an array
+        if (!Array.isArray(orderData.ingredients)) {
+            throw new Error('orderData.ingredients is not an array');
+        }
+
+        // Generate HTML table
+        const htmlTable = generateHTMLTable(orderData);
+
+        // Iterate over each ingredient in the orderData and add its quantity
+        for (const ingredient of orderData.ingredients) {
+            await addQuantityforIngredient(ingredient.id, ingredient.quantity, ingredient.units);
+        }
+
+        // Launch a headless browser
+        const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+        const page = await browser.newPage();
+
+        // Set the content of the page to the HTML table
+        await page.setContent(htmlTable);
+
+        // Render the page as a PNG image
+        const imageBuffer = await page.screenshot({ type: 'png' });
+
+        // Close the browser
+        await browser.close();
+
+        // Send email with image attachment
+        const mailOptions = {
+            from: process.env.AUTH_EMAIL,
+            to: ['jadhavmadhuri2525@gmail.com', 'omkarbandal2010@gmail.com'], // Replace with recipient's email address
+            subject: 'Order Details',
+            text: 'Please find attached the order details.',
+            attachments: [{ filename: 'order.png', content: imageBuffer }]
+        };
+
+        await sendEmail(mailOptions);
+
+        res.send('Email sent successfully');
+    } catch (error:any) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Failed to send email: ' + error.message); // Provide error message to client
+    }
+};
+
