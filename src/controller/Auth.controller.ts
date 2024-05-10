@@ -90,23 +90,13 @@ export const loginUserHandler = async (
       return next(new AppError(400, 'Invalid email or password'));
     }
 
-    // 2. Sign Access and Refresh Tokens
-    const { access_token, refresh_token } = await signTokens(user);
-
-    // 3. Add Cookies
-    res.cookie('access_token', access_token, accessTokenCookieOptions);
-    res.cookie('refresh_token', refresh_token, refreshTokenCookieOptions);
-    res.cookie('logged_in', true, {
-      ...accessTokenCookieOptions,
-      httpOnly: false,
-    });
-
+    const user_email=user.email;
     // 4. Send response
     res.status(200).json({
       status: 'success',
-      access_token,
-     user,
-       refresh_token
+      //access_token,
+     user_email
+      // refresh_token
     });
   } catch (err) {
     next(err);
